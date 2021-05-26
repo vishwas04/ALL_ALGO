@@ -39,4 +39,6 @@ int main()
     {
         printf("%d\n",a[i]);
     }
+    free(a);
+    a=NULL;
 }
