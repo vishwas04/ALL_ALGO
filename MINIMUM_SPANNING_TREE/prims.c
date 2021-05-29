@@ -17,7 +17,7 @@ void creategraph(int n,int a[][n+1])
         a[j][i]=w;
     }
 }
-void am_dfs(int * selected,int n,int a[][n+1])
+void prims(int * selected,int n,int a[][n+1])
 { 
     int no_of_nodes_in_min_span=0;
     while(no_of_nodes_in_min_span < n-1)
@@ -48,7 +48,7 @@ void am_dfs(int * selected,int n,int a[][n+1])
             }
         }
         selected[y]=1;
-        printf("\n%d to %d with path %d\n",x,y,min);
+        printf("%d to %d with path %d\n",x,y,min);
         no_of_nodes_in_min_span++;
         
     }
@@ -89,5 +89,5 @@ int main()
         selected[i]=0;
     }
     printf("\nmin span tree-\n");
-    am_dfs(selected,n,a);
+    prims(selected,n,a);
 }
