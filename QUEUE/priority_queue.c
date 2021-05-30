@@ -2,7 +2,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-# define MAX 5
+# define MAX 10
 int count=0;
 
 struct node

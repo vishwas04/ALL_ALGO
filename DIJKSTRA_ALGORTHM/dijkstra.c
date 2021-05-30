@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-//SAMPLE INPUT
-//6 1 2 3 1 6 5 1 5 6 2 6 4 2 3 1 3 4 6 3 6 4 4 6 5 4 5 8 5 6 2 0 0 0
+//using prims and relaxation of other vertex when we select a vertex for min span tree
 
 void creategraph(int n,int a[][n+1])
 {
@@ -17,10 +15,34 @@ void creategraph(int n,int a[][n+1])
         a[j][i]=w;
     }
 }
-void prims(int * selected,int n,int a[][n+1])
+void relaxation(int selected,int n,int a[][n+1],int * output)
+{
+    for (int i = 1; i <=n ; i++)
+    {
+        if (a[selected][i])
+        {
+            if (output[selected]+a[selected][i] < output[i] )
+            {
+                output[i]=output[selected]+a[selected][i];
+            }
+            
+        }
+        
+    }
+    
+
+}
+void prims(int * selected,int n,int a[][n+1],int v)
 { 
+    int output[n+1];
+    for (int i = 1; i <= n+1; i++)
+    {
+        output[i]=99999999;
+    }
+    output[v]=0;
     int no_of_nodes_in_min_span=0;
-    selected[1]=1;
+    selected[v]=1;
+    relaxation(v,n,a,output);
     while(no_of_nodes_in_min_span < n-1)
     {
         int x=0,y=0;
@@ -49,11 +71,17 @@ void prims(int * selected,int n,int a[][n+1])
         }
         selected[y]=1;
         printf("%d to %d with path %d\n",x,y,min);
+        relaxation(y,n,a,output);
         no_of_nodes_in_min_span++;
         
     }
-
+    for (int i = 1; i <=n; i++)
+    {
+        printf("from %d to %d Minimum Distance is %d\n",v,i,output[i]);
+    }
+    
 }
+
 
 int main()
 {
@@ -89,5 +117,8 @@ int main()
         selected[i]=0;
     }
     printf("\nmin span tree-\n");
-    prims(selected,n,a);
+    int v;
+    printf("Enter the source vertex");
+    scanf("%d",&v);
+    prims(selected,n,a,v);
 }
