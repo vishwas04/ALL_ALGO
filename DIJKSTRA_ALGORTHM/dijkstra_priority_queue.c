@@ -106,7 +106,7 @@ void update(struct node q[],int v,struct node selected,int n,int a[][n+1])
     }
 }
 //6 1 2 3 1 6 5 1 5 6 2 6 4 2 3 1 3 4 6 3 6 4 4 6 5 4 5 8 5 6 2 0 0 0
-void relaxation(struct node q[],int n,int a[][n+1],struct node selected,int * vis)
+void relaxation(struct node q[],int n,int a[][n+1],struct node selected,int * vis,int path[][n+1])
 {
     for (int i = 1; i <=n ; i++)
     {
@@ -121,6 +121,8 @@ void relaxation(struct node q[],int n,int a[][n+1],struct node selected,int * vi
                     if (q[o].data==i)
                     {
                         q[o].priority=a[selected.data][i]+selected.priority;
+                        path[i][0]++;
+                        path[i][path[i][0]]=selected.data;
                     }
                                 
                 }
@@ -157,12 +159,43 @@ void dijkstra(int n,int a[][n+1],int v)
         vis[i]=0;
     }
     vis[v]=1;
+    int path[n+1][n+1];
+    for (int i = 1; i <=n; i++)
+    {
+        for (int j = 0; j <=n ; j++)
+        {
+            if (j==0)
+                path[i][j]=0;
+            else
+                path[i][j]=-1;
+        }
+    }
+    
     while (count!=0)
     {
         struct node temp=delete(q);
         printf("from %d to %d Minimum Distance is %d\n",v,temp.data,temp.priority);
         vis[temp.data]=1;
-        relaxation(q,n,a,temp,vis);
+        relaxation(q,n,a,temp,vis,path);
+        // for (int i = 0; i <=n ; i++)
+        // {
+        //     printf("%d ",vis[i]);
+        // }
+        // printf("\n");
+        
+    }
+    for (int i = 1; i <=n; i++)
+    {
+        printf("min path from %d to %d is ",v,i);
+        printf("%d ",v);
+        for (int j = 1; j <=n ; j++)
+        {
+            if (path[i][j]!=-1)
+            {
+                printf("%d ",path[i][j]);
+            }
+        }
+        printf("%d\n",i);
     }
     
     
