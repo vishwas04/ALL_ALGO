@@ -174,7 +174,14 @@ void dijkstra(int n,int a[][n+1],int v)
     while (count!=0)
     {
         struct node temp=delete(q);
-        printf("from %d to %d Minimum Distance is %d\n",v,temp.data,temp.priority);
+        if (temp.priority==99999999)
+        {
+            printf("from %d to %d NO PATH\n",v,temp.data);
+        }
+        else
+            printf("from %d to %d Minimum Distance is %d\n",v,temp.data,temp.priority);
+
+        
         vis[temp.data]=1;
         relaxation(q,n,a,temp,vis,path);
         // for (int i = 0; i <=n ; i++)

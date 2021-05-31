@@ -70,14 +70,24 @@ void prims(int * selected,int n,int a[][n+1],int v)
             }
         }
         selected[y]=1;
-        printf("%d to %d with path %d\n",x,y,min);
+        if (min!=99999999)
+        {
+            printf("%d to %d with path %d\n",x,y,min);
+        }
+        
         relaxation(y,n,a,output);
         no_of_nodes_in_min_span++;
         
     }
+    printf("\n");
     for (int i = 1; i <=n; i++)
     {
-        printf("from %d to %d Minimum Distance is %d\n",v,i,output[i]);
+        if (output[i]==99999999)
+        {
+            printf("from %d to %d NO PATH\n",v,i);
+        }
+        else
+            printf("from %d to %d Minimum Distance is %d\n",v,i,output[i]);
     }
     
 }
